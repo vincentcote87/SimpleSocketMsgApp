@@ -2,11 +2,19 @@ from queue import Queue,Empty
 from threading import Thread
 import socket,sys,errno
 
-PORT = 55000
 BUFLN = 1000
 
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.bind(('', int(sys.argv[1])))
+try:
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+except:
+	print("Cannot open socket")
+	sys.exit(1)
+
+try:	
+	s.bind(('', int(sys.argv[1])))
+except:
+	print("Cannot bind socket to port")
+	sys.exit(1)
 
 class Receiver(Thread):
 	def __init__(self, queue):
